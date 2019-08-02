@@ -1,0 +1,26 @@
+npm install nrm -g
+
+more /home/jerry/.config/sinopia/config.yaml 
+  storage: /app/sinopia/storage
+
+pm2 start sinopia
+nrm ls
+add sinopia http://192.168.8.6:4873/
+
+use test;
+create table user(  
+	id int not null primary key auto_increment,  
+	username varchar(100) not null,  
+	password varchar(100) not null   
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;  
+
+Not Found: @types/q@lates
+nrm use npm
+npm install --save @types/q
+nrm use sinopia
+
+npm install express mysql body-parser;
+
+npm install axios --save
+
+npm install --save vue-axios
