@@ -24,3 +24,105 @@ npm install express mysql body-parser;
 npm install axios --save
 
 npm install --save vue-axios
+
+npm install vue-easytable --save-dev
+
+netstat -anp | grep 808 | grep LISTEN | awk '{print $7}' | awk -F/ '{print $1}'
+
+npm install vue-beauty -S
+
+vue项目启动时将localhost替换成指定ip地址
+1.node启动vue项目时地址一般都是http://localhost:8080
+
+2.config->index.js 中的host：‘localhost’换成host：‘你的本机ip’就可以了
+
+module.exports = {
+  dev: {
+    host: '192.168.1.100'
+	or
+	host: '0.0.0.0'
+  }
+}
+
+vue2.5.2版本 ：MAC设置应用在127.0.0.1:80端口访问； 并将127.0.0.1指向www.yours.com ；问题“ Invalid Host header”
+0.设置自己的host文件，将127.0.0.1指向自己想要访问的域名
+
+127.0.0.1  www.yours.com
+
+1.MAC设置应用在127.0.0.1：80端口访问：
+
+config/index.js目录下修改host和port
+
+然后sudo运行npm run dev:(mac的80端口是被自身分享应用占用的，使用的话需要root权限)
+
+sudo npm run dev
+ 运行完后，在127.0.0.1:80下能访问应用了。但是，在www.yours.com下，页面上会出现"Invalid Host header"。按照下面解决。
+
+2.解决"Invalid Host header"
+
+打开build/webpack.dev.conf.js文件，搜索“devServer”，添加如下配置 
+
+disableHostCheck: true,//解决127.0.0.1指向其他域名时出现"Invalid Host header"问题
+
+
+=============================
+axios POST提交数据的三种请求方式写法
+
+1、Content-Type: application/json
+import axios from 'axios'
+let data = {"code":"1234","name":"yyyy"};
+axios.post(`${this.$url}/test/testRequest`,data)
+.then(res=>{
+    console.log('res=>',res);            
+})
+clipboard.png
+
+2、Content-Type: multipart/form-data
+import axios from 'axios'
+let data = new FormData();
+data.append('code','1234');
+data.append('name','yyyy');
+axios.post(`${this.$url}/test/testRequest`,data)
+.then(res=>{
+    console.log('res=>',res);            
+})
+clipboard.png
+
+3、Content-Type: application/x-www-form-urlencoded
+import axios from 'axios'
+import qs from 'Qs'
+let data = {"code":"1234","name":"yyyy"};
+axios.post(`${this.$url}/test/testRequest`,qs.stringify({
+    data
+}))
+.then(res=>{
+    console.log('res=>',res);            
+})
+
+
+var paramsJson = {"access_token": this.token}; 
+this.$ajax.post('/newfwsb/MenuConfigController/queryMenuconfigFirst',paramsJson).then((response)=>{
+          this.menuConfigs = response.data.content.menuConfigs;
+ })
+
+ var paramsJson ={"access_token":this.token,"page":this.page,"size":this.size};
+this.$ajax.get('/newfwsb/RepairMesController/repairMesRepairStatusList',{params:paramsJson}).then((response)=>{
+  this.repairMesList = response.data.content.RepairMesSerPage.content       
+  console.log(JSON.stringify(response.data.content.RepairMesSerPage.content
+));
+
+
+git clone https://github.com/vuejs/vue-devtools
+npm install
+npm run build
+vi shells>chrome>manifest.json
+persistent: true
+chrome://extensions
+vue-devtools>shells>chrome
+
+ npm run build
+
+sudo npm install -g http-server
+http-server 
+cd dist
+http-server -p 8080
