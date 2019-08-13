@@ -8,6 +8,9 @@ var sqlMap = {
     },
     task: {
         selectall: 'select * from t_task'
+    },
+    action: {
+        selecttoday: 'select * from t_task_action'
     }
 }
 

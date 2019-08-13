@@ -64,7 +64,6 @@ sudo npm run dev
 
 disableHostCheck: true,//解决127.0.0.1指向其他域名时出现"Invalid Host header"问题
 
-
 =============================
 axios POST提交数据的三种请求方式写法
 
@@ -99,7 +98,6 @@ axios.post(`${this.$url}/test/testRequest`,qs.stringify({
     console.log('res=>',res);            
 })
 
-
 var paramsJson = {"access_token": this.token}; 
 this.$ajax.post('/newfwsb/MenuConfigController/queryMenuconfigFirst',paramsJson).then((response)=>{
           this.menuConfigs = response.data.content.menuConfigs;
@@ -111,6 +109,20 @@ this.$ajax.get('/newfwsb/RepairMesController/repairMesRepairStatusList',{params:
   console.log(JSON.stringify(response.data.content.RepairMesSerPage.content
 ));
 
+//给所有请求头部加上token
+axios.interceptors.request.use(
+  config => {
+    //在所有请求头部添加token值
+    const token = store.state.token;
+    if (token) {
+      config.headers.Authorization = token;
+    }
+    return config
+  },
+  error => {
+    return Promise.reject(error)
+  }
+);
 
 git clone https://github.com/vuejs/vue-devtools
 npm install
@@ -120,9 +132,12 @@ persistent: true
 chrome://extensions
 vue-devtools>shells>chrome
 
- npm run build
+npm run build
 
 sudo npm install -g http-server
 http-server 
 cd dist
 http-server -p 8080
+
+ netstat -anp | grep 8080 | grep LISTEN | awk '{print $7}' | awk -F/ '{print $1}' | xargs kill -9
+ npm run dev

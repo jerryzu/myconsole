@@ -5,7 +5,7 @@ var mysql = require('mysql');
 var $sql = require('../sqlMap');
 
 // 连接数据库
-var conn = mysql.createConnection(models.mysql);
+var conn = mysql.createConnection(models.local);
 
 conn.connect();
 var jsonWrite = function(res, ret) {
