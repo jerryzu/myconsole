@@ -1,8 +1,35 @@
 <template>
   <div id="app">
+    <div>
+      <Form :model="formItem" ref="formItem" :rules="ruleInline" :label-width="80">
+        <button @click="doSearch">查询</button>
+        <FormItem label="完成状态 : " prop="sendValue">
+          <Select style="width:200px" v-model="formItem.sendValue">
+            <Option
+              v-for="item in formItem.stateList"
+              :value="item.value"
+              :key="item.value"
+              name="sendValue"
+            >
+              {{
+              item.label }}
+            </Option>
+          </Select>
+        </FormItem>
+      </Form>
+    </div>
     <h1 v-html="title"></h1>
-    <input v-model="status" v-on:keyup.enter="addNew" />
-    <button @click="addNew">查询</button>
+    <input v-model="status1" v-on:keyup.enter="doSearch" />
+    <Select v-model="status" style="width:200px">
+      <option disabled>请选择</option>
+      <Option value="0">notReady</Option>
+      <Option value="1">ready</Option>
+      <Option value="2">running</Option>
+      <Option value="3">fail</Option>
+      <Option value="4">succ</Option>
+      <Option value="5">autoSucc</Option>
+    </Select>
+    <button @click="doSearch">查询</button>
     <table>
       <tr>
         <td>执行ID</td>
@@ -52,13 +79,41 @@ export default {
     return {
       title: "太平科技保险数据调度系统",
       items: [],
-      newItem: ""
+      status: 5,
+      status1: 51,
+      formItem: {
+        d_title: "",
+        u_phone: "",
+
+        stateList: [
+          {
+            value: "0",
+            label: "待分配"
+          },
+          {
+            value: "1",
+            label: "开发中"
+          },
+          {
+            value: "2",
+            label: "已完成"
+          },
+          {
+            value: "3",
+            label: "停用"
+          },
+          {
+            value: "4",
+            label: "已变更"
+          }
+        ]
+      }
     };
   },
   mounted() {
-    const ListCateUrl = "/api/action/selecttoday";
+    const ActionUrl = "/api/action/selecttoday";
     this.axios
-      .get(ListCateUrl)
+      .get(ActionUrl)
       .then(res => {
         this.items = res.data;
       })
@@ -67,16 +122,19 @@ export default {
       });
   },
   methods: {
-    addNew: function() {
-      let ListCateUrl = "/api/action/selecttoday";
+    doSearch: function() {
+      let d_status = this.formItem.sendValue;
+      console.log("中国");
+      console.log(d_status);
+
+      let ActionUrl = "/api/action/selecttoday";
       console.log(this.status);
       if (this.status != "") {
-        console.log("good");
-        ListCateUrl = ListCateUrl + "?status=" + this.status;
+        ActionUrl = ActionUrl + "?status=" + this.status;
       }
 
       this.axios
-        .get(ListCateUrl)
+        .get(ActionUrl)
         .then(res => {
           this.items = res.data;
         })

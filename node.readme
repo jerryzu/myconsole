@@ -141,3 +141,9 @@ http-server -p 8080
 
  netstat -anp | grep 8080 | grep LISTEN | awk '{print $7}' | awk -F/ '{print $1}' | xargs kill -9
  npm run dev
+
+
+var params = {};
+params.d_create_user = this.formItem.d_create_user;
+params.d_progress = this.formItem.d_progress,
+params.d_status = this.formItem.sendValue,

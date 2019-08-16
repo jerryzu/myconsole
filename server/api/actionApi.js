@@ -23,12 +23,16 @@ var jsonWrite = function (res, ret) {
 router.get('/selecttoday', (req, res) => {
 	var sql = $sql.action.selecttoday;
 	let whsql = url.parse(req.url, true).query;
-	let addsql = ' where ';
+	let addsql = '';
 
 	if (whsql.status) {
 		addsql = addsql + ' status =  ' + whsql.status;
 	}
-	sql = sql + addsql + ' limit 1,10 ';
+	if (addsql){
+		sql = sql + ' where ' + addsql;
+	} else{
+		sql = sql + ' limit 1,10 ';
+	}
 	console.log(sql);
 	conn.query(sql, function (err, result) {
 		if (err) {

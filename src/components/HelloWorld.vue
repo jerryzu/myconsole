@@ -1,6 +1,10 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+	<router-link to="Task">Task</router-link>
+	<router-link to="Action">Action</router-link>
+	<router-link to="DropDown">DropDown</router-link>
+	<router-link to="TablePage">TablePage</router-link>
     <form>
       <input type="text" name="username" v-model="userName" />
       <br />
